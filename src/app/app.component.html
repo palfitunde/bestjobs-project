@@ -1,0 +1,331 @@
+<header class="border-bottom">
+    <div class="container">
+        <nav class="navbar">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="/"><img class="site-logo" src="../assets/images/bj-logo.png" alt="Logo"></a>
+                </div>
+                <div class="col-md-9">
+                    <button type="button" class="navbar-toggler btn u-hamburger col-auto" aria-expanded="true" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                        <span id="hamburgerTrigger" class="u-hamburger__box">
+                            <span class="u-hamburger__inner"></span>
+                        </span>
+                    </button>
+                    <div id="navBar" class="header-navbar">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="https://www.bestjobs.eu/en/company"><strong>Recruiting?</strong>Add job</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://www.bestjobs.eu/en/login" class="btn btn-link text-primary">
+                                <i class="fas fa-sign-in-alt"></i>Sign in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://www.bestjobs.eu/en/register" class="btn btn-sm btn-outline-primary transition-3d-hover">
+                                    <i class="fas fa-lock"></i>Sign up
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <div class="home-hero">
+            <div class="w-40 space-top-bottom">
+                <h1 class="h4 font-weight-bold">Discover your best!</h1>
+                <p class="lead text-lh-sm">More jobs, more chances to get hired. Find the job that makes you happy!</p>
+            </div>
+            <div class="search-form">
+                <div class="card-body p-4">
+                    <form method="get" action="/en/jobs" currentlocale="en" novalidate="novalidate">
+                        <div class="row align-items-end">
+                            <div class="col-lg col-12 mb-4 mb-lg-0">
+                                <div class="form-group mb-0">
+                                    <label class="font-weight-bold mb-3 h6">What are you searching for?</label>
+                                    <div class="input-field">
+                                        <input type="text" id="keyword" name="keyword" placeholder="Keyword">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg col-12 mb-4 mb-lg-0">
+                                <div class="form-group mb-0">
+                                    <label class="font-weight-bold mb-3 h6">Where are you searching?</label>
+                                    <div class="input-field">
+                                        <input type="text" id="location" name="location" placeholder="City/County/Country" >
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span class="geolocation">
+                                            <i class="far fa-compass text-success"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-auto col-12">
+                                <button type="submit" class="btn btn-block btn-wide btn-primary transition-3d-hover">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="job-list border-top">
+        <div class="container">
+            <h3 class="h6 font-weight-bold pl-4 m-0">Jobs in your location.</h3>
+            <div class="row">
+                <div class="col-lg-3 card-item" *ngFor="let jobItem of jobList; let i = index">
+                    <div class="card-body">
+                        <div class="job-action text-right">
+                            <i class="far fa-heart text-muted-custom"></i>
+                        </div>
+                        <div class="job-summary">
+                            <div class="mobile-left">
+                                <div *ngIf="jobItem.logo" class="company-logo">
+                                    <img src="{{ jobItem.logo }}" alt="">
+                                </div>
+                                <div *ngIf="jobItem.rating" class="rating">
+                                    <div class="rating-container" >
+                                        <div class="stars-empty mobile-rating">
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <div class="stars-full mobile-rating" style="width: width: {{ jobItem.rating*20 }}%">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <em>{{ jobItem.rating }}</em>
+                                </div>
+                            </div>
+                            <div class="mobile-right">
+                                <div *ngIf="jobItem.job_name" class="job-title">
+                                    <h2 class="card-title m-t-0" (click)="openModalWithClass(template, jobItem)">
+                                        <strong>{{ jobItem.job_name }}</strong>
+                                    </h2>
+                                </div>
+                                <h3 *ngIf="jobItem.company_name" class="company-name mb-0">
+                                    <a class="text-muted-custom" href="https://www.bestjobs.eu/en/companies/bestjobs-ro">{{ jobItem.company_name }}</a>
+                                </h3>
+                                <div *ngIf="jobItem.salary">
+                                    <p class="mb-0"><small>{{ jobItem.salary }}</small></p>
+                                </div>
+                                <div *ngIf="jobItem.location">
+                                    <p class="mb-0">
+                                        <small><a href="https://bestjobs.eu/en/jobs-in-targu-mures" >{{ jobItem.location }}</a></small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="desktop-summary hidden-xs">
+                                <div *ngIf="jobItem.logo" class="company-logo">
+                                    <img src="{{ jobItem.logo }}" alt="">
+                                </div>
+                                <h3 *ngIf="jobItem.company_name" class="company-name text-center mb-0">
+                                    <a class="text-muted-custom" href="https://www.bestjobs.eu/en/companies/bestjobs-ro">{{ jobItem.company_name }}</a>
+                                </h3>
+                                <div class="extra-information">
+                                    <div *ngIf="jobItem.rating" class="rating">
+                                        <div class="rating-container">
+                                                <div class="stars-empty">
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>           
+                                                </div>
+                                                <div class="stars-full" style="width: {{ jobItem.rating*20 }}%">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>            
+                                                </div>
+                                            </div>
+                                        <em>{{ jobItem.rating }}</em>
+                                    </div>
+                                    <div *ngIf="jobItem.extra_info" class="extra-info">
+                                        <i class="fas fa-comment-alt text-success"></i>
+                                        <small class="text-muted-custom">Responsive Employer</small>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="jobItem.job_name" class="job-title">
+                                    <h2 class="card-title m-t-0 text-center" (click)="openModalWithClass(template, jobItem)">
+                                        <strong>{{ jobItem.job_name }}</strong>
+                                    </h2>
+                                </div>
+                                <div class="job-details">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div *ngIf="jobItem.location">
+                                                <p class="mb-0"><small class="text-uppercase"><strong>Location:</strong></small></p>
+                                                <p class="mb-0">
+                                                    <small><a href="https://bestjobs.eu/en/jobs-in-targu-mures" >{{ jobItem.location }}</a></small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 text-right">
+                                            <div *ngIf="jobItem.salary">
+                                                <p class="mb-0"><small class="text-uppercase"><strong>Salary:</strong></small></p>
+                                                <p class="mb-0"><small>{{ jobItem.salary }}</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="action">
+                                        <a href="/en/job/senior-front-end-web-developer-7?rid=ee974206-11bc-47e9-80ce-e216c67ead83&amp;st=es" class="btn btn-outline-primary btn-block show-detail-in-modal stretched-link">
+                                            <strong>Details</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="footer-top border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-lg mb-6 mb-lg-0">
+                    <a href="https://bestjobs.eu/en/" class="max-width-7">
+                        <img class="img-fluid" alt="Bestjobs" src="https://cdn.bestjobs.eu/static/build/images/bj-geko-green-blue.a5ca84dd.png">
+                    </a>
+                </div>
+                <div class="col col-lg-auto order-lg-last text-right">
+                    <div class="d-inline-block dropdown">
+                        <button type="button" class="btn btn-text btn-text-secondary dropdown-toggle p-0 text-muted-custom" id="footerLanguageDropdownInvoker" aria-controls="footerLanguageDropdown" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#footerLanguageDropdown" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-delay="300" data-unfold-hide-on-scroll="true" data-unfold-animation-in="slideInUp" data-unfold-animation-out="fadeOut">
+                            <i class="fas fa-globe"></i> English
+                        </button>
+                        <div id="footerLanguageDropdown" class="dropdown-menu dropdown-unfold dropdown-menu-right u-unfold--css-animation u-unfold--hidden fadeOut" aria-labelledby="footerLanguageDropdownInvoker" style="animation-duration: 300ms; right: 0px;">
+                            <a href="https://www.bestjobs.eu/ro/" title="Romanian" class="dropdown-item">Romana</a>
+                            <a href="https://www.bestjobs.eu/pl/" title="Polish" class="dropdown-item">Polski</a>
+                            <a href="https://www.bestjobs.eu/hu/" title="Hungarian" class="dropdown-item">Magyar</a>
+                            <a href="https://www.bestjobs.eu/de/" title="German" class="dropdown-item">Deutsch</a>
+                            <a href="https://www.bestjobs.eu/fr/" title="French" class="dropdown-item">Français</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg">
+                    <h4 class="h6 text-muted-custom small"><strong>Candidates</strong></h4>
+                    <ul class="list-group-borderless mb-0">
+                        <li>
+                            <a href="/en/sitemap/jobs?type=user" class="list-group-item-action text-muted-custom">Site map</a>
+                        </li>
+                        <li>
+                            <a href="http://support.bestjobs.eu/hc/en-us/categories/360000454151-Candidates" class="list-group-item-action text-muted-custom">Support<span class="d-md-inline d-none text-nowrap"> (+40) 31 710 4230</span></a>
+                            <a class="d-md-none text-nowrap list-group-item-action pt-0" href="tel:+40317104230">  (+40) 31 710 4230</a>
+                        </li>
+                        <li>
+                            <a href="/en/legal/terms?type=user" class="list-group-item-action text-muted-custom">Conditions</a>
+                        </li>
+                        <li>
+                            <a href="/en/legal/confidentiality?type=user" class="list-group-item-action text-muted-custom">Confidentiality</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg">
+                    <h4 class="h6 text-muted-custom small"><strong>Employers</strong></h4>
+                    <ul class="list-group list-group-flush list-group-borderless mb-0">
+                        <li><a href="/en/job/new" class="list-group-item-action text-muted-custom">Add job </a></li>
+                        <li><a href="/en/company/offer" class="list-group-item-action text-muted-custom">Pricing</a></li>   
+                        <li><a href="/en/register/recruiter" class="list-group-item-action text-muted-custom">I want an employer account</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-lg text-center text-lg-left pt-6 pt-lg-0">
+                    <h4 class="h6 text-muted-custom small"><strong>Follow us on social media:</strong></h4>
+                    <div class="mb-3 text-lh-sm footer-socials">
+                        <a href="https://www.facebook.com/BestJobs" target="_blank" class="btn btn-text btn-text-secondary p-0 mr-2" data-toggle="tooltip" title="" data-original-title="Follow us on Facebook">
+                            <i class="fab fa-fw fa-facebook-square"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/bestjobs" target="_blank" class="btn btn-text btn-text-secondary p-0 mr-2" data-toggle="tooltip" title="" data-original-title="Follow us on Linkedin">
+                            <i class="fab fa-fw fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.bestjobs.eu/learn/en/" target="_blank" class="badge badge-secondary text-uppercase px-1" data-toggle="tooltip" title="" data-original-title="Keep discovering your best">
+                            <small class="font-weight-bold">Learn</small>
+                            </a>
+                    </div>
+                    <h4 class="h6 text-muted-custom small">
+                        <strong>Download the BestJobs app</strong>
+                    </h4>
+                    <div class="text-nowrap-custom footer-apps">
+                        <div class="app-inner">
+                            <a href="https://itunes.apple.com/us/app/bestjobs.ro/id584324978?utm_campaign=link&amp;utm_source=internal&amp;utm_medium=logout" target="_blank" class="btn btn-xs btn-outline-secondary transition-3d-hover text-left mr-1 p-2">
+                                <span class="media align-items-center">
+                                    <i class="fab fa-apple fa-stack-1_5x mr-2"></i>
+                                    <span class="media-body text-lh-sm">
+                                        <span class="d-block">Available on the</span>
+                                        <strong>App Store</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="app-inner">
+                            <a href="https://play.google.com/store/apps/details?id=ro.bestjobs.androidapp&amp;referrer=utm_source%3Dinternal%26utm_campaign%3Dlink%26utm_medium%3Dlogout" target="_blank" class="btn btn-xs btn-outline-secondary transition-3d-hover text-left mr-1 p-2">
+                                <span class="media align-items-center">
+                                    <i class="fab fa-google-play fa-stack-1_5x mr-2"></i>
+                                    <span class="media-body text-lh-sm">
+                                        <span class="d-block">Get it on</span>
+                                        <strong>Google Play</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="app-inner">
+                            <a href="https://appgallery.cloud.huawei.com/ag/n/app/C101233035?locale=en_US&amp;source=appshare&amp;subsource=C101233035&amp;referrer=utm_source%3Dinternal%26utm_campaign%3Dlink%26utm_medium%3Dlogout" target="_blank" class="btn btn-xs btn-outline-secondary transition-3d-hover text-left p-2">
+                                    <span class="media align-items-center">
+                                    <i class="fab fa-hubspot"></i>
+                                    <i class="fab huawei-app-gallery fa-stack-1_5x fa-stack-1_5x mr-2"></i>
+                                    <span class="media-body text-lh-sm">
+                                        <span class="d-block">Explore it on</span>
+                                        <strong>AppGallery Play</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom border-top">
+        <div class="container">
+            <p class="text-center text-uppercase">© 2020 Bestjobs Recrutare SA</p>
+        </div>
+    </div>
+</footer>
+
+<ng-template #template>  
+    <div class="modal-header">  
+        <h4 class="modal-title pull-left">Job description</h4>  
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">  
+        <span aria-hidden="true">×</span>  
+        </button>  
+    </div>  
+    <div class="modal-body">
+        <div *ngIf="modalJob.company_name" class="job-details-item">
+            <strong class="text-muted-custom">Company name</strong>
+            <p>{{ modalJob.company_name }}</p>
+        </div>
+        <div *ngIf="modalJob.job_name" class="job-details-item">
+            <strong class="text-muted-custom">Job title</strong>
+            <p>{{ modalJob.job_name }}</p>
+        </div>
+        <div *ngIf="modalJob.location" class="job-details-item">
+            <strong class="text-muted-custom">Address</strong>
+            <p>{{ modalJob.location }}</p>
+        </div>
+        <div *ngIf="modalJob.salary" class="job-details-item">
+            <strong class="text-muted-custom">Gross Salary</strong>
+            <p class="mb-0">{{ modalJob.salary }}</p>
+        </div>
+    </div> 
+    <div class="modal-footer"> 
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button> 
+    </div>  
+</ng-template> 
